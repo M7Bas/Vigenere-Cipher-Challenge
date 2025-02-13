@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher Challenge</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { margin: 10px; padding: 10px; font-size: 16px; }
+        #output { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Vigenère Cipher Challenge</h2>
+    <p>Enter a message to encrypt:</p>
+    <input type="text" id="inputText" placeholder="Type here...">
+    <button onclick="encryptMessage()">Encrypt</button>
+    <p id="output"></p>
+
+    <script>
+        function obfuscateKey() {
+            let parts = ['SEC', 'RET', 'KEY']; // Key is "SECRETKEY"
+            return parts.join('');
+        }
+
+        function vigenereEncrypt(text, key) {
+            let result = '';
+            let keyIndex = 0;
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i].toUpperCase();
+                if (char >= 'A' && char <= 'Z') {
+                    let shift = key[keyIndex % key.length].charCodeAt(0) - 65;
+                    let newChar = String.fromCharCode(((char.charCodeAt(0) - 65 + shift) % 26) + 65);
+                    result += newChar;
+                    keyIndex++;
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+
+        function encryptMessage() {
+            let input = document.getElementById('inputText').value;
+            let key = obfuscateKey();
+            let encryptedText = vigenereEncrypt(input, key);
+            document.getElementById('output').innerText = `Encrypted Text: ${encryptedText}`;
+        }
+    </script>
+</body>
+</html>
