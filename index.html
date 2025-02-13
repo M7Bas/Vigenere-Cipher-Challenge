@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+    <h1>FC382 - Defense Mechanisms</h1>
     <h2>Vigenère Cipher Challenge</h2>
     <p>Enter a message to encrypt:</p>
     <input type="text" id="inputText" placeholder="Type here...">
@@ -19,8 +20,13 @@
 
     <script>
         function obfuscateKey() {
-            let parts = ['SEC', 'RET', 'KEY']; // Key is "SECRETKEY"
-            return parts.join('');
+            let keyParts = [
+                String.fromCharCode(75, 69), 
+                String.fromCharCode(69, 80), 
+                String.fromCharCode(73, 84), 
+                String.fromCharCode(85, 80)
+            ];
+            return keyParts.join('');
         }
 
         function vigenereEncrypt(text, key) {
@@ -29,7 +35,7 @@
             for (let i = 0; i < text.length; i++) {
                 let char = text[i].toUpperCase();
                 if (char >= 'A' && char <= 'Z') {
-                    let shift = key[keyIndex % key.length].charCodeAt(0) - 65;
+                    let shift = key.charCodeAt(keyIndex % key.length) - 65;
                     let newChar = String.fromCharCode(((char.charCodeAt(0) - 65 + shift) % 26) + 65);
                     result += newChar;
                     keyIndex++;
@@ -44,7 +50,7 @@
             let input = document.getElementById('inputText').value;
             let key = obfuscateKey();
             let encryptedText = vigenereEncrypt(input, key);
-            document.getElementById('output').innerText = `Encrypted Text: ${encryptedText}`;
+            document.getElementById('output').innerText = "Encrypted: " + encryptedText;
         }
     </script>
 </body>
